@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/vue"></script>
+  <title>Vue</title>
+</head>
+<body>
+  <div class="wrapper">
+    <form class="sample">
+      <label for="">
+        Email
+        <input v-model="mail"  type="email">
+      </label>
+      <label for="">
+        Firstname
+        <input v-model="name"  type="text">
+      </label>
+      <label for="">
+        Lastname
+        <input v-model="surname"  type="text">
+      </label>
+      <label for="">
+        Phone
+        <input v-model="phone"  type="text">
+      </label>
+      <label for="">
+        Guests
+        <button type="button" @click="addGuest">+</button>
+        <ul>
+          <li v-for="(guest, index) in guests">
+            <h3 @click="removeGuest" :data-index="index">Guest {{index +1}}</h3>
+            <input v-model="guests[index]" type="text">
+          </li>
+        </ul>
+      </label>
+      <button class="btn" type="submit">Send data</button>
+    </form>
+  </div>
+
+
+  <script>
+    var myVue = new Vue({
+      el: '.sample',
+      data: {
+        mail: '',
+        name: '',
+        surname: '',
+        phone: '',
+        guests: []
+      },
+      methods: {
+        addGuest() {
+          var guest = '';
+          this.guests.push(guest);
+        },
+        removeGuest(e) {
+          var index = e.target.dataset.index;
+          this.guests.splice(index, 1);
+        }
+      }
+    })
+  </script>
+  <style>
+
+    form {
+      width: 650px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    label {
+      display: flex;
+      margin: 30px;
+      width: 590px;
+    }
+
+    input {
+      width: 500px;
+      margin-left: auto;
+    }
+    .btn {
+      margin-left: auto;
+      margin: auto;
+    }
+  </style>
+</body>
+</html>
