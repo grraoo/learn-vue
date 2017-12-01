@@ -9,7 +9,8 @@
 </head>
 <body>
   <div class="wrapper">
-    <form class="sample">
+    <form class="sample" v-if="formShow">
+      <h2>Fill the feilds</h2>
       <label for="">
         Email
         <input v-model="mail"  type="email">
@@ -32,24 +33,53 @@
         <ul>
           <li v-for="(guest, index) in guests">
             <h3 @click="removeGuest" :data-index="index">Guest {{index +1}}</h3>
-            <input v-model="guests[index]" type="text">
+            <input v-model="guests[index]" type="text" autofocus>
           </li>
         </ul>
       </label>
-      <button class="btn" type="submit">Send data</button>
+      <button class="btn" type="button" @click="sendData">Send data</button>
     </form>
+    <div class="data" v-else>
+      <h2>All done!</h2>
+      <table>
+        <tr >
+          <td>Email:</td>
+          <td>{{mail}}</td>
+        </tr>
+        <tr >
+          <td>Name:</td>
+          <td>{{name}}</td>
+        </tr>
+        <tr >
+          <td>Surname:</td>
+          <td>{{surname}}</td>
+        </tr>
+        <tr >
+          <td>Phone:</td>
+          <td>{{phone}}</td>
+        </tr>
+      </table>
+      <h3>Guests:</h3>
+      <ul>
+        <li v-for="(guest, index) in guests">
+          <h4 @click="removeGuest" :data-index="index">Guest {{index +1}}</h4>
+          <p>{{guests[index]}}</p>
+        </li>
+      </ul>
+    </div>
   </div>
 
 
   <script>
     var myVue = new Vue({
-      el: '.sample',
+      el: '.wrapper',
       data: {
         mail: '',
         name: '',
         surname: '',
         phone: '',
-        guests: []
+        guests: [],
+        formShow: true
       },
       methods: {
         addGuest() {
@@ -59,12 +89,19 @@
         removeGuest(e) {
           var index = e.target.dataset.index;
           this.guests.splice(index, 1);
+          // сомневаюсь в правильности такого решения, но работает же =)
+        },
+        sendData() {
+          this.formShow = false;
         }
       }
     })
   </script>
   <style>
-
+    .wrapper {
+          width: 650px;
+          margin: 0 auto;
+    }
     form {
       width: 650px;
       margin: 0 auto;
